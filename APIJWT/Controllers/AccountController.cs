@@ -32,15 +32,37 @@ namespace APIJWT.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {
+
+            AppUser user = new AppUser
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                SecurityStamp = Guid.NewGuid().ToString(),
+
+            };
+            if (!await _roleManager.RoleExistsAsync(RolesModel.admin))
+                await _roleManager.CreateAsync(new IdentityRole(RolesModel.admin));
+            if (!await _roleManager.RoleExistsAsync(RolesModel.user))
+                await _roleManager.CreateAsync(new IdentityRole(RolesModel.user));
             if (ModelState.IsValid)
             {
                 var result = await userservice.RegisterUser(model);
 
+                var res2 = await usermanager.AddToRoleAsync(user, RolesModel.user);
+
                 if (result.IsSuccess)
                 {
                     //EmailService.SendEmail("ahmedahemd123adel.007@gmail.com", "EmailConfirmation", "<a href=\"" + ConfirmationLink "\">Confirm Registration", true, User.Identity.Name);
+
                     return Ok(result);
+
                 }
+                if (result.IsSuccess)
+                {
+                    return (IActionResult)res2;
+
+                }
+
                 else
                 {
                     return BadRequest(result);
@@ -81,7 +103,7 @@ namespace APIJWT.Controllers
         }
 
 
-        [HttpPost("Login")]      
+        [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody]LoginViewModel model)
         {
             if (ModelState.IsValid)

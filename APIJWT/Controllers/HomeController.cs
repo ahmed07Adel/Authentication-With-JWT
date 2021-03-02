@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace APIJWT.Controllers
 {
-    [Authorize(Roles = RolesModel.admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class HomeController : ControllerBase
