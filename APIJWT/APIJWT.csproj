@@ -28,6 +28,7 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.4" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.17.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.3" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.17.0" />
   </ItemGroup>
 
@@ -35,6 +36,13 @@
     <Reference Include="System.ServiceModel.Primitives">
       <HintPath>C:\Program Files (x86)\Microsoft SDKs\UWPNuGetPackages\microsoft.netcore.universalwindowsplatform\6.2.10\ref\uap10.0.15138\System.ServiceModel.Primitives.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Bus\" />
+    <Folder Include="MicroServices\" />
+    <Folder Include="Infra.IOC\" />
+    <Folder Include="Infra.Bus\" />
   </ItemGroup>
 
 
