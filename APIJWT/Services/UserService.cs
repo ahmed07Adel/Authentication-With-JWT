@@ -27,8 +27,6 @@ namespace APIJWT.Services
             this._roleManager = _roleManager;
 
         }
-       
-
         public async Task<UserManagerResponse> RegisterUser(RegisterViewModel model)
         {
             if (model == null)
@@ -57,7 +55,6 @@ namespace APIJWT.Services
                     {
                         Message = "user created successfully",
                         IsSuccess = true
-
                     };
                 }
                 return new UserManagerResponse

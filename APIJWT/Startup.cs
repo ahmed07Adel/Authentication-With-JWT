@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,6 +34,8 @@ namespace APIJWT
         public void ConfigureServices(IServiceCollection services)
         {
             IdentityModelEventSource.ShowPII = true;
+            services.AddScoped<IProducts, ProductRepository>();
+            services.AddScoped<ICategory, CategoryRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddDbContext<AppDbContext>(options =>
@@ -48,7 +49,7 @@ namespace APIJWT
                 options.Password.RequiredLength = 5;
                 options.Lockout.MaxFailedAccessAttempts = 3;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(20);
-                options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedEmail = false;
 
 
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
@@ -73,8 +74,9 @@ namespace APIJWT
                 };
             
             });
-           
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(opt => {
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
 
         }
 

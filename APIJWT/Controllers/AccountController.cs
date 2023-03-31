@@ -33,6 +33,7 @@ namespace APIJWT.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {
 
+           
             AppUser user = new AppUser
             {
                 UserName = model.Email,
@@ -101,8 +102,6 @@ namespace APIJWT.Controllers
             }
             return Ok();
         }
-
-
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody]LoginViewModel model)
         {
