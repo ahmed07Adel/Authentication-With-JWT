@@ -33,7 +33,7 @@ namespace APIJWT.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {
 
-           
+
             AppUser user = new AppUser
             {
                 UserName = model.Email,
@@ -85,12 +85,12 @@ namespace APIJWT.Controllers
                 UserName = model.Email,
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-            
+
             };
             var result = await usermanager.CreateAsync(user, model.Password);
-            if (!result.Succeeded)  
+            if (!result.Succeeded)
                 return StatusCode(StatusCodes.Status500InternalServerError, "check details");
-            
+
             if (!await _roleManager.RoleExistsAsync(RolesModel.admin))
                 await _roleManager.CreateAsync(new IdentityRole(RolesModel.admin));
             if (!await _roleManager.RoleExistsAsync(RolesModel.user))
@@ -103,20 +103,28 @@ namespace APIJWT.Controllers
             return Ok();
         }
         [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody]LoginViewModel model)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
             if (ModelState.IsValid)
-            {            
+            {
                 var result = await userservice.LoginUser(model);
                 if (result.IsSuccess)
                 {
-                   
+
                     return Ok(result);
 
                 }
                 return BadRequest(result);
             }
             return BadRequest("some thing is wrong");
+        }
+        [HttpGet("GenderDropDownList")]
+        public async Task<IActionResult> GenderDropDownList()
+        {
+
+            var result = await userservice.GetGenderDropDownList();
+            return Ok(result);
+
         }
     }
 }

@@ -10,10 +10,6 @@ namespace APIJWT.Services
     {
         Task<UserManagerResponse> RegisterUser(RegisterViewModel model);
         Task<UserManagerResponse> LoginUser(LoginViewModel model);
-        //Task CreateAdmin();
-        //Task CreateRole();
-
-
-
+        Task<object> GetGenderDropDownList();
     }
 }
